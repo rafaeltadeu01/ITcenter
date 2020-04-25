@@ -1,9 +1,9 @@
 #!/bin/bash
-## nano /home/vagrant/.bashrc
+## nano ~/.bashrc
 ## alias dc='/docker/manager/central.sh'
 
 ## Variaveis de controle
- vpathdocker="/docker"
+ vpathdocker="./"
  vsrv=$1
 
  ## up service
@@ -13,7 +13,7 @@ srvup(){
 }
 ## down service
 srvdown(){
- cd $vpathdocker/docker-compose-$vsrv
+ cd $vpathdocker/docker-compose-$vsrv~/.bashrc
  docker-compose down
 }
 ## start service

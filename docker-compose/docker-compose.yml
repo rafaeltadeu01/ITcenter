@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  ## Nginx Service 
+ webserver:
+    image: nginx:alpine
+    container_name: srv-ws-nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./conf/nginx/www:/var/www
+      - ./conf/nginx/conf.d:/etc/nginx/conf.d/
+    networks:
+      - app-network
+
+#Docker Networks
+ networks:
+     app-network:
+      driver: bridge
