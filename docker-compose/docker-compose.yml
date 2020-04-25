@@ -12,10 +12,3 @@ services:
     volumes:
       - ./conf/nginx/www:/var/www
       - ./conf/nginx/conf.d:/etc/nginx/conf.d/
-    networks:
-      - app-network
-
-#Docker Networks
- networks:
-     app-network:
-      driver: bridge
