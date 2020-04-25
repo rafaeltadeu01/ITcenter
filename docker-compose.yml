@@ -17,7 +17,7 @@ services:
 
 #### GLPI Service ####
 
-mysql57:
+ mysql57:
   image: mysql:5.7
   container_name: 'srv-db-mysql57'
   labels:
@@ -35,7 +35,7 @@ mysql57:
      - MYSQL_USER=glpiuser
      - MYSQL_PASSWORD=glpipass
 
-glpi:
+ glpi:
   build:
     context: .
     dockerfile: ./conf/glpi/Dockerfile-glpi
@@ -60,7 +60,7 @@ glpi:
     - GLPI_MYSQL_PASS=glpipass
     - GLPI_MYSQL_DB=glpi
 
-phpmyadmin:
+ phpmyadmin:
   image: phpmyadmin/phpmyadmin:latest
   container_name: 'srv-phpmyadmin'
   labels:
