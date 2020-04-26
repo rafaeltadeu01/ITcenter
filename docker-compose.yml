@@ -82,7 +82,7 @@ services:
        - ./storage/ocsinv/ocssrv:/etc/ocsinventory-reports/
        - ./storage/ocsinv/ocslib:/var/lib/ocsinventory-reports/
     env_file:
-       - ./conf/ocsinv/ovsinv.env
+       - ./conf/ocsinv/ocsinv.env
     depends_on:
        - mysql-ocsinv
     links :
@@ -120,7 +120,7 @@ services:
        - ./storage/syspass/syspass-config:/var/www/html/sysPass/app/config
        - ./storage/syspass/syspass-backup:/var/www/html/sysPass/app/backup
     env_file:
-       - ./conf/ocsinv/syspass.env
+       - ./conf/syspass/syspass.env
     depends_on:
        - mysql-syspass
     links :
