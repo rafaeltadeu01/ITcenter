@@ -1,7 +1,7 @@
 version: '3.3'
 services: 
 
-#### NGINX Service ####
+#### NGINX WEBSERVER ####
   webserver:
     image: nginx:latest
     container_name: srv-ws-nginx
@@ -12,10 +12,15 @@ services:
     ports:
        - "80:80"
        - "443:443"
+    links :
+       - glpi
+       - ocsinv
+       - syspass
+       - grafana
 #    volumes:
 #       - ./conf/nginx/confd/:/etc/nginx/conf.d
 
-#### APPLICATION GLPI  ####
+#### APPLICATION GLPI ####
   mysql-glpi:
     image: mysql:5.7.23
     container_name: srv-db-glpi
@@ -89,7 +94,7 @@ services:
        - mysql-ocsinv
 
 
-#### APPLICATION SYSPASS  ####
+#### APPLICATION SYSPASS ####
   mysql-syspass:
    image: mysql:5.7.23
    container_name: srv-db-syspass
@@ -125,4 +130,19 @@ services:
        - mysql-syspass
     links :
        - mysql-syspass
-  
+
+#### APPLICATION GRAFANA ####
+  grafana:
+    image: grafana/grafana:5.1.0    
+    container_name: srv-grafana
+    labels:
+      conteiner.description: "Application GRAFANA"
+    hostname: srv-grafana
+    restart: always
+    ports:
+     - 8004:3000
+    user: "104"
+    volumes:
+     - ./storage/grafana/var/lib:/var/lib/grafana
+     - ./storage/grafana/var/log:/var/log/grafana
+     - ./storage/grafana/:/etc/grafana

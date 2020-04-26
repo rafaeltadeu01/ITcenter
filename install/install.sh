@@ -1,3 +1,3 @@
 #!/bin/bash
-## Executar antes de subir o servidor GLPI
-sudo chown -R www-data.www-data conf/glpi/html/
+## Executar antes de subir o servidor OCS Inventory
+sudo docker-compose build
