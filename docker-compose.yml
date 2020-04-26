@@ -15,27 +15,26 @@ services:
 #    volumes:
 #       - ./conf/nginx/confd/:/etc/nginx/conf.d
 
-#### Database MYSQL SERVER 5.7 service ####
-  mysql57:
+#### APPLICATION GLPI  ####
+  mysql-glpi:
     image: mysql:5.7.23
-    container_name: srv-db-mysql57
+    container_name: srv-db-glpi
     labels:
-      conteiner.description: "Server DataBase MySQL5.7"
-    hostname: srv-mysql57
+       conteiner.description: "Server DataBase MySQL5.7 FOR GLPI"
+    hostname: srv-db-glpi
     restart: always
     ports:
        - "3306:3306"
     volumes:
-       - ./storage/mysql57/var/lib/mysql:/var/lib/mysql
+       - ./storage/mysq-glpi/var/lib/mysql:/var/lib/mysql
     env_file:
-       - ./conf/mysql57/mysql.env
+       - ./conf/mysql57/mysql-glpi.env
 
-#### APPLICATION GLPI  ####
   glpi:
     image: diouxx/glpi
     container_name : srv-glpi
     labels:
-      conteiner.description: "Application GLPI"
+       conteiner.description: "Application GLPI"
     hostname: srv-glpi
     restart: always
     ports:
@@ -46,20 +45,84 @@ services:
        - ./storage/glpi/:/var/www/html/glpi
     env_file:
        - ./conf/glpi/glpi.env
+    depends_on:
+         - mysql-glpi
+    links :
+         - mysql-glpi
+
+
+
+#### APPLICATION OCSINVETORY ####       
+  mysql-ocsinv:
+   image: mysql:5.7.23
+   container_name: srv-db-ocsinv
+   labels:
+      conteiner.description: "Server DataBase MySQL5.7 FOR OCS INVENTORY"
+   hostname: srv-db-ocsinv
+   restart: always
+   ports:
+      - "3307:3306"
+   volumes:
+      - ./storage/mysq-ocsinv/var/lib/mysql:/var/lib/mysql
+   env_file:
+      - ./conf/mysql57/mysql-ocsinv.env
+
+  ocsinv :
+    image : ocsinventory/ocsinventory-docker-image:latest
+    container_name : srv-ocs
+    labels:
+      conteiner.description: "Application OCS INVENTORY"
+    hostname: srv-ocsinv
+    restart: always
+    ports :
+      - 8002:80
+      - 8442:443
+    volumes :
+       - ./storage/ocsinv/ocsdownload:/usr/share/ocsinventory-reports/ocsreports/download/
+       - ./storage/ocsinv/ocssrv:/etc/ocsinventory-reports/
+       - ./storage/ocsinv/ocslib:/var/lib/ocsinventory-reports/
+    env_file:
+       - ./conf/ocsinv/ovsinv.env
+    depends_on:
+       - mysql-ocsinv
+    links :
+       - mysql-ocsinv
+
 
 #### APPLICATION SYSPASS  ####
+  mysql-syspass:
+   image: mysql:5.7.23
+   container_name: srv-db-syspass
+   labels:
+      conteiner.description: "Server DataBase MySQL5.7 FOR SYSPASS"
+   hostname: srv-db-syspass
+   restart: always
+   ports:
+      - "3308:3306"
+   volumes:
+      - ./storage/mysq-syspass/var/lib/mysql:/var/lib/mysql
+   env_file:
+      - ./conf/mysql57/mysql-syspass.env
+
   syspass:
-    image: nuxsmin/docker-syspass:3.0
+    image: syspass/syspass:3.1.2
     container_name: srv-syspass
     labels:
       conteiner.description: "Application SYSPASS"
     hostname: srv-syspass
     restart: always
     ports:
-       - "8002:80"
-       - "8442:443"
+       - "8003:80"
+       - "8443:443"
     links:
        - mysql57
     volumes:
        - ./storage/syspass/syspass-config:/var/www/html/sysPass/app/config
        - ./storage/syspass/syspass-backup:/var/www/html/sysPass/app/backup
+    env_file:
+       - ./conf/ocsinv/syspass.env
+    depends_on:
+       - mysql-syspass
+    links :
+       - mysql-syspass
+  
