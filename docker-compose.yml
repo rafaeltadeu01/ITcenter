@@ -1,5 +1,5 @@
 version: '3.3'
- 
+
 #### NGINX Service ####
 services: 
  webserver:
@@ -21,13 +21,14 @@ services:
    image: mysql:5.7.23
    container_name: srv-db-mysql57
    hostname: mysql57
+   ports:
+      - "3306:3306"
+   restart: always
    volumes:
      - ./storage/mysql57/var/lib/mysql:/var/lib/mysql
    env_file:
      - ./conf/mysql57/mysql.env
-   restart: always
-   environment:
-      TIMEZONE=Amercia/SaoPaulo
+   
 
 #### GLPI Service ####
  glpi:
@@ -36,10 +37,10 @@ services:
    hostname: glpi
    ports:
      - "8001:80"
+   restart: always
    volumes:
      - /etc/timezone:/etc/timezone:ro
      - /etc/localtime:/etc/localtime:ro
      - ./storage/glpi/:/var/www/html/glpi
-     restart: always
-     environment:
-     - TIMEZONE=Amercia/SaoPaulo
+   env_file:
+      - ./conf/glpi/glpi.env 
