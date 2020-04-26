@@ -1,7 +1,8 @@
 version: '3.3'
 services: 
+
 #### NGINX Service ####
-   webserver:
+  webserver:
     image: nginx:latest
     container_name: srv-ws-nginx
     labels:
@@ -14,6 +15,7 @@ services:
        - "443:443"
     volumes:
        - ./conf/nginx/conf.d/:/etc/nginx/conf.d
+
 #### Database MYSQL SERVER 5.7 service ####
   mysql57:
     image: mysql:5.7.23
@@ -28,7 +30,8 @@ services:
        - ./storage/mysql57/var/lib/mysql:/var/lib/mysql
     env_file:
        - ./conf/mysql57/mysql.env
- #### GLPI Service ####
+
+#### GLPI Service ####
   glpi:
     image: diouxx/glpi
     container_name : srv-glpi
