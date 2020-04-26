@@ -30,12 +30,12 @@ services:
     env_file:
        - ./conf/mysql57/mysql.env
 
-#### GLPI Service ####
+#### APPLICATION GLPI  ####
   glpi:
     image: diouxx/glpi
     container_name : srv-glpi
     labels:
-      conteiner.description: "Server GLPI"
+      conteiner.description: "Application GLPI"
     hostname: srv-glpi
     restart: always
     ports:
@@ -46,3 +46,20 @@ services:
        - ./storage/glpi/:/var/www/html/glpi
     env_file:
        - ./conf/glpi/glpi.env
+
+#### APPLICATION SYSPASS  ####
+  syspass:
+    image: nuxsmin/docker-syspass:3.0
+    container_name: srv-syspass
+    labels:
+      conteiner.description: "Application SYSPASS"
+    hostname: srv-syspass
+    restart: always
+    ports:
+       - "8002:80"
+       - "8442:443"
+    links:
+       - mysql57
+    volumes:
+       - ./storage/syspass/syspass-config:/var/www/html/sysPass/app/config
+       - ./storage/syspass/syspass-backup:/var/www/html/sysPass/app/backup
