@@ -76,7 +76,7 @@ services:
     image : ocsinventory/ocsinventory-docker-image:latest
     container_name : srv-ocs
     labels:
-      conteiner.description: "Application OCS INVENTORY"
+       conteiner.description: "Application OCS INVENTORY"
     hostname: srv-ocsinv
     restart: always
     ports :
@@ -136,7 +136,7 @@ services:
     image: grafana/grafana:6.5.0    
     container_name: srv-grafana
     labels:
-      conteiner.description: "Application GRAFANA"
+       conteiner.description: "Application GRAFANA"
     hostname: srv-grafana
     restart: always
     ports:
@@ -144,12 +144,12 @@ services:
      - 8444:443
     user: "104"
     volumes:
-     - ./storage/grafana/var/lib:/var/lib/grafana
-     - ./storage/grafana/var/log:/var/log/grafana
-     - ./storage/grafana/:/etc/grafana
+#     - ./storage/grafana/var/lib:/var/lib/grafana
+#     - ./storage/grafana/var/log:/var/log/grafana
+#     - ./storage/grafana/:/etc/grafana
 
 #### APPLICATION WORDPRESS ####
- mysql-wordpres:
+  mysql-wordpress:
     image: mysql:5.7.23
     container_name: srv-db-wordpress
     labels:
@@ -160,7 +160,7 @@ services:
        - "3309:3306"
     volumes:
        - ./storage/mysq-wordpress/var/lib/mysql:/var/lib/mysql
-     env_file:
+    env_file:
        - ./conf/mysql57/mysql-wordpress.env
 
   wordpress:

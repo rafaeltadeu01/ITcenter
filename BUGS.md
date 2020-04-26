@@ -1,3 +1,5 @@
-## 0001 REPARAR o problema com os volumes do NGINX
-## 0002 REPARAR o servico do OCS INVENTORY que não está disponivel
-## 0003 REPARAR o problema com os volumes do GRAFANA
+## Nº   APP         Status      Data        Data Correcao   Descricao
+## 0001 [NGINX]     REPARAR     26042020    AGUARDANDO      o problema com os volumes do NGINX
+## 0002 [OCSINV]    REPARAR     26042020    AGUARDANDO      o servico do OCS INVENTORY que não está disponivel
+## 0003 [GRAFANA]   REPARAR     26042020    AGUARDANDO      o problema com os volumes do GRAFANA
+## 0004 [WORDPRESS] REPARAR     26042020    AGUARDANDO      o problema com conexao do banco do wordpress
