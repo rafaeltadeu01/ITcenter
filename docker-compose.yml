@@ -9,12 +9,11 @@ services:
        conteiner.description: "Server Web NGINX"
     hostname: srv-nginx
     restart: always
-    tty: true
     ports:
        - "80:80"
        - "443:443"
-    volumes:
-       - ./conf/nginx/conf.d/:/etc/nginx/conf.d
+#    volumes:
+#       - ./conf/nginx/confd/:/etc/nginx/conf.d
 
 #### Database MYSQL SERVER 5.7 service ####
   mysql57:
