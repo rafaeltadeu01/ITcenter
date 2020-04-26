@@ -120,7 +120,7 @@ services:
        - "8003:80"
        - "8443:443"
     links:
-       - mysql57
+       - mysql-syspass
     volumes:
        - ./storage/syspass/syspass-config:/var/www/html/sysPass/app/config
        - ./storage/syspass/syspass-backup:/var/www/html/sysPass/app/backup
@@ -133,7 +133,7 @@ services:
 
 #### APPLICATION GRAFANA ####
   grafana:
-    image: grafana/grafana:5.1.0    
+    image: grafana/grafana:6.5.0    
     container_name: srv-grafana
     labels:
       conteiner.description: "Application GRAFANA"
@@ -141,8 +141,43 @@ services:
     restart: always
     ports:
      - 8004:3000
+     - 8444:443
     user: "104"
     volumes:
      - ./storage/grafana/var/lib:/var/lib/grafana
      - ./storage/grafana/var/log:/var/log/grafana
      - ./storage/grafana/:/etc/grafana
+
+#### APPLICATION WORDPRESS ####
+ mysql-wordpres:
+    image: mysql:5.7.23
+    container_name: srv-db-wordpress
+    labels:
+       conteiner.description: "Server DataBase MySQL5.7 FOR WORDPRESS"
+    hostname: srv-db-wordpress
+    restart: always
+    ports:
+       - "3309:3306"
+    volumes:
+       - ./storage/mysq-wordpress/var/lib/mysql:/var/lib/mysql
+     env_file:
+       - ./conf/mysql57/mysql-wordpress.env
+
+  wordpress:
+    image: wordpress:latest
+    container_name: srv-wordpress
+    labels:
+       conteiner.description: "Application WORDPRESS"
+    hostname: srv-wordpress
+    restart: always
+    ports:
+       - "8005:80"
+       - "8445:443"
+#    volumes:
+#       - ./storage/wordpress/syspass-config:/var/www/html/sysPass/app/config
+    env_file:
+       - ./conf/wordpress/wordpress.env
+    depends_on:
+       - mysql-wordpress
+    links :
+       - mysql-wordpress
