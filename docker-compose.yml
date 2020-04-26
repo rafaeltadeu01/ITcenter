@@ -1,46 +1,46 @@
 version: '3.3'
 services: 
-
 #### NGINX Service ####
- webserver:
-    image: nginx:alpine
+   webserver:
+    image: nginx:latest
     container_name: srv-ws-nginx
     labels:
-    conteiner.description: "Server Web NGINX"
-    restart: unless-stopped
+       conteiner.description: "Server Web NGINX"
+    hostname: srv-nginx
+    restart: always
     tty: true
     ports:
        - "80:80"
        - "443:443"
     volumes:
        - ./conf/nginx/conf.d/:/etc/nginx/conf.d
-
 #### Database MYSQL SERVER 5.7 service ####
-
- mysql57:
+  mysql57:
     image: mysql:5.7.23
     container_name: srv-db-mysql57
-    hostname: mysql57
+    labels:
+      conteiner.description: "Server DataBase MySQL5.7"
+    hostname: srv-mysql57
+    restart: always
     ports:
        - "3306:3306"
-    restart: always
     volumes:
        - ./storage/mysql57/var/lib/mysql:/var/lib/mysql
     env_file:
        - ./conf/mysql57/mysql.env
-   
-
-#### GLPI Service ####
+ #### GLPI Service ####
   glpi:
     image: diouxx/glpi
     container_name : srv-glpi
-    hostname: glpi
+    labels:
+      conteiner.description: "Server GLPI"
+    hostname: srv-glpi
+    restart: always
     ports:
        - "8001:80"
-    restart: always
     volumes:
        - /etc/timezone:/etc/timezone:ro
        - /etc/localtime:/etc/localtime:ro
        - ./storage/glpi/:/var/www/html/glpi
     env_file:
-       - ./conf/glpi/glpi.env 
+       - ./conf/glpi/glpi.env
