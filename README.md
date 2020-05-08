@@ -8,7 +8,7 @@
 | 04   | OCS INVENTORY     | 26042020    | ERROR    | Asset Management    |
 | 05   | GRAFANA           | 26042020    | ERROR    | Dashboard Graphics  |
 | 06   | WORDPRESS         | 26042020    | ERROR    | Website Builder     |
-| 07   | Dublicati         | 08052020    | OK       | Backup Management   |
+| 07   | DUPLICATI         | 08052020    | OK       | Backup Management   |
 
 # Fonte do ocs inventory 
 OCSInventory-Docker-Stack: [Link](https://github.com/OCSInventory-NG/OCSInventory-Docker-Stack)

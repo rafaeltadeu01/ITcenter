@@ -22,7 +22,6 @@ services:
     volumes:
        - ./conf/nginx/conf.d/center.conf:/tmp/template
     
-
 #### APPLICATION GLPI ####
   mysql-glpi:
     image: mysql:5.7.23
@@ -58,8 +57,6 @@ services:
     links :
          - mysql-glpi
          - webserver
-
-
 
 #### APPLICATION OCSINVETORY ####       
   mysql-ocsinv:
@@ -97,7 +94,6 @@ services:
     links :
        - mysql-ocsinv
        - webserver
-
 
 #### APPLICATION SYSPASS ####
   mysql-syspass:
