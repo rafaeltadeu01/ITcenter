@@ -6,21 +6,21 @@ services:
     image: nginx:latest
     container_name: srv-ws-nginx
     labels:
-       conteiner.description: "Server Web NGINX"
+       conteiner.description: "Web Server NGINX"
     hostname: srv-nginx
     restart: always
-   ports:
+    ports:
        - "80:80"
        - "443:443"
     links :
        - glpi
-       - ocsinv
+#       - ocsinv
        - syspass
        - grafana
        - wordpress
        - duplicati
     volumes:
-       - ./conf/nginx/conf.d/center.conf:/tmp/template
+       - ./conf/nginx/center.conf:/tmp/center.conf
     
 #### APPLICATION GLPI ####
   mysql-glpi:
@@ -56,7 +56,6 @@ services:
          - mysql-glpi
     links :
          - mysql-glpi
-         - webserver
 
 #### APPLICATION OCSINVETORY ####       
   mysql-ocsinv:
@@ -93,7 +92,6 @@ services:
        - mysql-ocsinv
     links :
        - mysql-ocsinv
-       - webserver
 
 #### APPLICATION SYSPASS ####
   mysql-syspass:
@@ -131,7 +129,6 @@ services:
        - mysql-syspass
     links :
        - mysql-syspass
-       - webserver
 
 #### APPLICATION GRAFANA ####
   grafana:
@@ -149,8 +146,6 @@ services:
 #     - ./storage/grafana/var/lib:/var/lib/grafana
 #     - ./storage/grafana/var/log:/var/log/grafana
 #     - ./storage/grafana/:/etc/grafana
-    links :
-      - webserver
 
 #### APPLICATION WORDPRESS ####
   mysql-wordpress:
@@ -185,7 +180,6 @@ services:
        - mysql-wordpress
     links :
        - mysql-wordpress
-       - webserver
 
 #### APPLICATION DUPLICATI ####
   duplicati:
@@ -196,13 +190,10 @@ services:
     hostname: srv-duplicati
     restart: always
     env_file:
-      - ./conf/duplicati/duplicati.env
+       - ./conf/duplicati/duplicati.env
     volumes:
-      - .conf/duplicati/config:/config
-      - ./storage/duplicati/backups:/backups
-      - ./storage/duplicati/source:/source
+       - .conf/duplicati/config:/config
+       - ./storage/duplicati/backups:/backups
+       - ./storage/duplicati/source:/source
     ports:
-      - 8006:8200
-      links :
-      - webserver
-
+       - 8006:8200
