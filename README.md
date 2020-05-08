@@ -10,5 +10,5 @@ H1 Header List of CenterIT services
 | 06   | WORDPRESS         | 26042020    | ERROR    | Website Builder |
 | 07   | Dublicati         | 08052020    | OK       | Backup Management|
 
-Fonte do ocs inventory
-[Links](https://github.com/OCSInventory-NG/OCSInventory-Docker-Stack)
+Fonte do ocs inventory 
+<br> [OCSInventory-Docker-Stack](https://github.com/OCSInventory-NG/OCSInventory-Docker-Stack):
