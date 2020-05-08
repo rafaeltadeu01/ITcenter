@@ -9,7 +9,7 @@ services:
        conteiner.description: "Server Web NGINX"
     hostname: srv-nginx
     restart: always
-    ports:
+   ports:
        - "80:80"
        - "443:443"
     links :
@@ -17,8 +17,11 @@ services:
        - ocsinv
        - syspass
        - grafana
-#    volumes:
-#       - ./conf/nginx/confd/:/etc/nginx/conf.d
+       - wordpress
+       - duplicati
+    volumes:
+       - ./conf/nginx/conf.d/center.conf:/tmp/template
+    
 
 #### APPLICATION GLPI ####
   mysql-glpi:
@@ -54,6 +57,7 @@ services:
          - mysql-glpi
     links :
          - mysql-glpi
+         - webserver
 
 
 
@@ -92,6 +96,7 @@ services:
        - mysql-ocsinv
     links :
        - mysql-ocsinv
+       - webserver
 
 
 #### APPLICATION SYSPASS ####
@@ -130,6 +135,7 @@ services:
        - mysql-syspass
     links :
        - mysql-syspass
+       - webserver
 
 #### APPLICATION GRAFANA ####
   grafana:
@@ -143,10 +149,12 @@ services:
      - 8004:3000
      - 8444:443
     user: "104"
-    volumes:
+#   volumes:
 #     - ./storage/grafana/var/lib:/var/lib/grafana
 #     - ./storage/grafana/var/log:/var/log/grafana
 #     - ./storage/grafana/:/etc/grafana
+    links :
+      - webserver
 
 #### APPLICATION WORDPRESS ####
   mysql-wordpress:
@@ -181,3 +189,24 @@ services:
        - mysql-wordpress
     links :
        - mysql-wordpress
+       - webserver
+
+#### APPLICATION DUPLICATI ####
+  duplicati:
+    image: linuxserver/duplicati
+    container_name: srv-duplicati
+    labels:
+      conteiner.description: "Application DUPLICATI"
+      hostname: srv-duplicati
+      restart: always
+      env_file:
+         - ./conf/duplicati/duplicati.env
+    volumes:
+      - .conf/duplicati/config:/config
+      - ./storage/duplicati/backups:/backups
+      - ./storage/duplicati/source:/source
+    ports:
+      - 8006:8200
+      links :
+      - webserver
+
