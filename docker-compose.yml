@@ -197,10 +197,10 @@ services:
     container_name: srv-duplicati
     labels:
       conteiner.description: "Application DUPLICATI"
-      hostname: srv-duplicati
-      restart: always
-      env_file:
-         - ./conf/duplicati/duplicati.env
+    hostname: srv-duplicati
+    restart: always
+    env_file:
+      - ./conf/duplicati/duplicati.env
     volumes:
       - .conf/duplicati/config:/config
       - ./storage/duplicati/backups:/backups

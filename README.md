@@ -2,11 +2,11 @@
 https://github.com/OCSInventory-NG/OCSInventory-Docker-Stack
 
 ## Aplicaçoes e serviços Instalados
-Nº    APP/Server         Data       Status
-01º   NGINX             25042020    ERROR
-02º   GLPI              2504020    OK
-03º   SYSPASS           25042020    OK
-04º   OCS INVENTORY     26042020    ERROR
-05º   GRAFANA           26042020    ERROR
-06º   WORDPRESS         26042020    ERROR
-07º   Dublicati         08052020
+Nº   | APP/Server        | Data        | Status   | Description
+01   | NGINX             | 25042020    | ERROR    | Webserver
+02   | GLPI              | 2504020     | OK       | Incident management
+03   | SYSPASS           | 25042020    | OK       | Password Management 
+04   | OCS INVENTORY     | 26042020    | ERROR    | Asset Management
+05   | GRAFANA           | 26042020    | ERROR    | Dashboard Graphics
+06   | WORDPRESS         | 26042020    | ERROR    | Website Builder
+07   | Dublicati         | 08052020    | OK       | Backup Management
