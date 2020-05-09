@@ -1,0 +1,35 @@
+#### APPLICATION OCSINVETORY ####       
+mysql-ocsinv:
+    image: mysql:5.7.23
+    container_name: srv-db-ocsinv
+    labels:
+       conteiner.description: "Server DataBase MySQL5.7 FOR OCS INVENTORY"
+    hostname: srv-db-ocsinv
+    restart: always
+    ports:
+       - "3307:3306"
+    volumes:
+       - ./storage/mysq-ocsinv/var/lib/mysql:/var/lib/mysql
+    env_file:
+       - ./conf/mysql57/mysql-ocsinv.env
+ 
+   ocsinv :
+     image : ocsinventory/ocsinventory-docker-image:latest
+     container_name : srv-ocs
+     labels:
+        conteiner.description: "Application OCS INVENTORY"
+     hostname: srv-ocsinv
+     restart: always
+     ports :
+       - 8002:80
+       - 8442:443
+     volumes :
+        - ./storage/ocsinv/ocsdownload:/usr/share/ocsinventory-reports/ocsreports/download/
+        - ./storage/ocsinv/ocssrv:/etc/ocsinventory-reports/
+        - ./storage/ocsinv/ocslib:/var/lib/ocsinventory-reports/
+     env_file:
+        - ./conf/ocsinv/ocsinv.env
+     depends_on:
+        - mysql-ocsinv
+     links :
+        - mysql-ocsinv

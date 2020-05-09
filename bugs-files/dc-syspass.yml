@@ -1,0 +1,36 @@
+#### APPLICATION SYSPASS ####
+mysql-syspass:
+    image: mysql:5.7.23
+    container_name: srv-db-syspass
+    labels:
+       conteiner.description: "Server DataBase MySQL5.7 FOR SYSPASS"
+    hostname: srv-db-syspass
+    restart: always
+    ports:
+       - "3308:3306"
+    volumes:
+       - ./storage/mysq-syspass/var/lib/mysql:/var/lib/mysql
+    env_file:
+       - ./conf/mysql57/mysql-syspass.env
+ 
+   syspass:
+     image: syspass/syspass:3.1.2
+     container_name: srv-syspass
+     labels:
+       conteiner.description: "Application SYSPASS"
+     hostname: srv-syspass
+     restart: always
+     ports:
+        - "8003:80"
+        - "8443:443"
+     links:
+        - mysql-syspass
+     volumes:
+        - ./storage/syspass/syspass-config:/var/www/html/sysPass/app/config
+        - ./storage/syspass/syspass-backup:/var/www/html/sysPass/app/backup
+     env_file:
+        - ./conf/syspass/syspass.env
+     depends_on:
+        - mysql-syspass
+     links :
+        - mysql-syspass

@@ -1,0 +1,20 @@
+#### NGINX WEBSERVER ####
+  webserver:
+    image: nginx:latest
+    container_name: srv-ws-nginx
+    labels:
+       conteiner.description: "Web Server NGINX"
+    hostname: srv-nginx
+    restart: always
+    ports:
+       - "80:80"
+       - "443:443"
+    links :
+       - glpi
+       - ocsinv
+       - syspass
+       - grafana
+       - wordpress
+       - duplicati
+    volumes:
+       - ./conf/nginx/center.conf:/tmp/center.conf
