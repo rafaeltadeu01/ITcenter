@@ -1,18 +1,18 @@
 #!/bin/bash
 
-startserive(){
+startservice(){
 cd ./service/$stsrv
 docker-compose up -d
 }
 
 stsrv=grafana
-startserive
+startservice
 
 stsrv=jenkinks
-startserive
+startservice
 
 stsrv=odoo
-startserive
+startservice
 
 stsrv=syspass
-startserive
+startservice
