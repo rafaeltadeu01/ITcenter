@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: srv-jenkins
+    privileged: true
+    user: root
+    ports:
+      - 8081:8080
+      - 50000:50000
+    container_name: jenkins
+    volumes:
+      - ./data/jenkins:/var/jenkins_home
+      - ./data/var/run/docker.sock:/var/run/docker.sock
+      - ./data/usr/local/bin/docker:/usr/local/bin/docker
