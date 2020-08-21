@@ -1,4 +1,4 @@
-version: '2'
+version: '3.7'
 services:
   web:
     image: odoo:12.0
@@ -8,9 +8,9 @@ services:
     ports:
       - "8069:8069"
     volumes:
-      - odoo-web-data:/var/lib/odoo
-      - ./config:/etc/odoo
-      - ./addons:/mnt/extra-addons
+      - /home/storage/odoo/odoo-web-data:/var/lib/odoo
+      - /home/storage/odoo/config:/etc/odoo
+      - /home/storage/odoo/addons:/mnt/extra-addons
   db:
     image: postgres:10
     container_name: srv-odoo-db
@@ -20,7 +20,4 @@ services:
       - POSTGRES_USER=odoo
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
-      - odoo-db-data:/var/lib/postgresql/data/pgdata
-volumes:
-  odoo-web-data:
-  odoo-db-data:
+      - /home/storage/odoo/odoo-db-data:/var/lib/postgresql/data/pgdata
