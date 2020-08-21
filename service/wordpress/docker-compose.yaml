@@ -1,32 +1,53 @@
-version: '3.3'
+version: '3.7'
+
+volumes:
+  wp-data:
+networks:
+  wp-back:
 
 services:
-   wordpress:
-     depends_on:
-       - db
-     image: wordpress:latest
-     container_name: srv-wordpress     
-     volumes:
-       - wordpress_files:/var/www/html
-     ports:
-       - "8000:80"
-     restart: always
-     environment:
-       WORDPRESS_DB_HOST: db:3306
-       WORDPRESS_DB_USER: wordpress
-       WORDPRESS_DB_PASSWORD: wordpress
 
-   db:
-     image: mysql:5.7
-     container_name: srv-wordpress-db
-     volumes:
-       - db_data:/var/lib/mysql
-     restart: always
-     environment:
-       MYSQL_ROOT_PASSWORD: wordpress
+  db:
+    image: mysql:5.7
+    volumes:
+      - wp-data:/var/lib/mysql
+    environment:
+       MYSQL_ROOT_PASSWORD: rootPassword
        MYSQL_DATABASE: wordpress
-       MYSQL_USER: wordpress
-       MYSQL_PASSWORD: wordpress
-volumes:
-    wordpress_files:
-    db_data:
+       MYSQL_USER: wp-user
+       MYSQL_PASSWORD: wp-pass
+    ports:
+      - 8889:3306
+    networks:
+      - wp-back
+
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      MYSQL_USER: wp-user
+      MYSQL_PASSWORD: wp-pass
+      MYSQL_ROOT_PASSWORD: rootPassword
+    ports:
+      - 3001:80
+    networks:
+      - wp-back
+
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    ports:
+      - 8888:80
+      - 443:443
+    environment:
+       WORDPRESS_DB_HOST: db
+       WORDPRESS_DB_USER: wp-user
+       WORDPRESS_DB_PASSWORD: wp-pass
+    volumes:
+      - ./wordpress-files:/var/www/html
+    container_name: wordpress-site
+    networks:
+      - wp-back
