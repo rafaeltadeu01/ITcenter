@@ -14,7 +14,7 @@ services:
      environment:
        WORDPRESS_DB_HOST: db:3306
        WORDPRESS_DB_USER: wordpress
-       WORDPRESS_DB_PASSWORD: my_wordpress_db_password
+       WORDPRESS_DB_PASSWORD: wordpress
 
    db:
      image: mysql:5.7
@@ -23,10 +23,10 @@ services:
        - db_data:/var/lib/mysql
      restart: always
      environment:
-       MYSQL_ROOT_PASSWORD: my_db_root_password
+       MYSQL_ROOT_PASSWORD: wordpress
        MYSQL_DATABASE: wordpress
        MYSQL_USER: wordpress
-       MYSQL_PASSWORD: my_wordpress_db_password
+       MYSQL_PASSWORD: wordpress
 volumes:
     wordpress_files:
     db_data:
