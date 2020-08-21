@@ -1,28 +1,32 @@
-version: '3'
+version: '3.3'
+
 services:
-  wordpress:
-    image: custom-wordpress
-    build: .
-    container_name: srv-wordpress
-    environment:
-      WORDPRESS_DB_USER: ${DB_USER}
-      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
-      WORDPRESS_DB_NAME: ${DB_NAME}
-    links:
-      - db:mysql
-    ports:
-      - 8000:80
-      - 8444:443
-    volumes:
-      - /data/blog/html/:/var/www/html
-      - /caminho/para/certs/public/:/etc/ssl/certs/wordpress
-      - /caminho/para/certs/private/:/etc/ssl/private/wordpress
-    restart: always
-  db:
-    image: mariadb
-    container_name: srv-wordpress-db
-    environment:
-      MYSQL_ROOT_PASSWORD: ${ROOT_DB_PASSWORD}
-    volumes:
-      - /data/blog/mysql/:/var/lib/mysql
-    restart: always
+   wordpress:
+     depends_on:
+       - db
+     image: wordpress:latest
+     container_name: srv-wordpress     
+     volumes:
+       - wordpress_files:/var/www/html
+     ports:
+       - "8000:80"
+     restart: always
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_USER: wordpress
+       WORDPRESS_DB_PASSWORD: my_wordpress_db_password
+
+   db:
+     image: mysql:5.7
+     container_name: srv-wordpress-db
+     volumes:
+       - db_data:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: my_db_root_password
+       MYSQL_DATABASE: wordpress
+       MYSQL_USER: wordpress
+       MYSQL_PASSWORD: my_wordpress_db_password
+volumes:
+    wordpress_files:
+    db_data:
