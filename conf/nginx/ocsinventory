@@ -1,6 +1,6 @@
 server {
     listen 80;
-    server_name inventory.lab;
+    server_name ocsinventory.lab;
 
     location / {
         proxy_pass http://localhost:8002;
