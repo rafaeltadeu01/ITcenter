@@ -4,7 +4,7 @@ services:
 #Mysql Container
   mysql:
     image: mysql:5.7.23
-    container_name: mysql
+    container_name: srv-glpi-db
     hostname: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=password
@@ -15,7 +15,7 @@ services:
 #GLPI Container
   glpi:
     image: diouxx/glpi
-    container_name : glpi
+    container_name: srv-glpi
     hostname: glpi
     ports:
       - "8001:80"
