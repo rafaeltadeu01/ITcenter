@@ -1,6 +1,6 @@
 server {
     listen 80;
-    server_name glpi.lab;
+    server_name inventory.lab;
 
     location / {
         proxy_pass http://localhost:8002;
