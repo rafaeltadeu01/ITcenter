@@ -1,8 +1,8 @@
-version: '2'
+version: '3.3'
 
 services :
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana
     container_name: srv-grafana
     ports:
       - "3000:3000"
